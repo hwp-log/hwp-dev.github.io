@@ -1,26 +1,26 @@
 ---
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
 const allPosts = await getCollection('blog');
 
+console.log(allPosts.map((p) => p.id));
+
 const posts = allPosts
-  .filter((post) => post.id.startsWith('techdeepdive/')) 
+  .filter((post) => post.id.startsWith('techstory/'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
+
 
 <!doctype html>
 <html lang="ko">
   <head>
-    <BaseHead
-      title={`${SITE_TITLE} - TechDeepDive`}
-      description={SITE_DESCRIPTION}
-    />
+    <BaseHead title={`${SITE_TITLE} - Blog`} description={SITE_DESCRIPTION} />
     <style>
       .blog-main {
         width: 800px;
@@ -88,7 +88,6 @@ const posts = allPosts
       .blog-post-title {
         margin: 0 0 0.35em 0;
         font-size: 1.1rem;
-        color: #38bdf8;
       }
 
       .blog-post-meta {
@@ -110,7 +109,7 @@ const posts = allPosts
       }
     </style>
   </head>
-  <body>
+  <body class="blog-page">
     <Header />
     <main class="blog-main">
       <section>
@@ -118,7 +117,7 @@ const posts = allPosts
           {
             posts.map((post) => (
               <li class="blog-card">
-                <a class="blog-card-link" href={`/techdeepdive/${post.id}/`}>
+                <a class="blog-card-link" href={`/techstory/${post.id}/`}>
                   <article class="blog-card-inner">
                     {post.data.heroImage && (
                       <div class="blog-thumb">
